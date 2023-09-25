@@ -41,7 +41,7 @@ public:
     void setComp(int channel, uint16_t up_value, uint16_t down_value, bool source, bool mode);/* Sets the comparator for givin channel (1-4), with up and down value, source (0 -> unfiltered 1-> filtered), mode (0 -> digital status mode 1-> digital input mode)*/
     uint16_t readCompReg(int channel, bool highlow); /* Reads the selected channel register (1-4) highlow selects if COUTHI (1) or COUTLO (0) is read */
     uint16_t readCompStat(void); /* Reads the COUT STATUS register */
-    uint16_t readInterupt(void); /* Reads the I´NTERUPT STAUS register !READING CLEARS ALL INTERUPT FLAGS! */
+    uint16_t readInterrupt(void); /* Reads the I´NTERUPT STAUS register !READING CLEARS ALL INTERUPT FLAGS! */
     void setInteruptEnable(uint16_t data); /* Sets the INTERUPT ENABLE REGISTER after this operation interupts will be issued over the #INT pin! */
     void SPI_CRC (bool enable); /* ENABLES/DISABELS CRC*/
     void COMTThreshold(bool enable); /* ENABLE COMMON THRESHOLD only COUTH1 and COUTLO1 are used for all comparators*/
