@@ -42,7 +42,7 @@ public:
     uint16_t readCompReg(int channel, bool highlow); /* Reads the selected channel register (1-4) highlow selects if COUTHI (1) or COUTLO (0) is read */
     uint16_t readCompStat(void); /* Reads the COUT STATUS register */
     uint16_t readInterrupt(void); /* Reads the I´NTERUPT STAUS register !READING CLEARS ALL INTERUPT FLAGS! */
-    void setInteruptEnable(uint16_t data); /* Sets the INTERUPT ENABLE REGISTER after this operation interupts will be issued over the #INT pin! */
+    void setInterruptEnable(uint16_t data); /* Sets the INTERUPT ENABLE REGISTER after this operation interupts will be issued over the #INT pin! */
     void SPI_CRC (bool enable); /* ENABLES/DISABELS CRC*/
     void COMTThreshold(bool enable); /* ENABLE COMMON THRESHOLD only COUTH1 and COUTLO1 are used for all comparators*/
     void CLEARFilter(int channel); /* Clears the specific filter (1-4) */
