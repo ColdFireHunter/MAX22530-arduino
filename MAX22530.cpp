@@ -173,7 +173,7 @@ uint16_t MAX22530::readCompStat()
 {
   return MAX22530::MAX22530_read_register(COUT_STATUS);
 }
-uint16_t MAX22530::readInterupt()
+uint16_t MAX22530::readInterrupt()
 {
   return MAX22530::MAX22530_read_register(INTERRUPT_STATUS);
 }
