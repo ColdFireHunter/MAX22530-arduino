@@ -18,16 +18,16 @@ int MAX22530::readADC(int channel)
   int temp = 0;
   switch (channel)
   {
-  case 1:
+  case 0:
     temp = MAX22530::MAX22530_read_register(ADC1_REG);
     break;
-  case 2:
+  case 1:
     temp = MAX22530::MAX22530_read_register(ADC2_REG);
     break;
-  case 3:
+  case 2:
     temp = MAX22530::MAX22530_read_register(ADC3_REG);
     break;
-  case 4:
+  case 3:
     temp = MAX22530::MAX22530_read_register(ADC4_REG);
     break;
   default:
@@ -44,16 +44,16 @@ int MAX22530::readFiltered(int channel)
   int temp = 0;
   switch (channel)
   {
-  case 1:
+  case 0:
     temp = MAX22530::MAX22530_read_register(FADC1);
     break;
-  case 2:
+  case 1:
     temp = MAX22530::MAX22530_read_register(FADC2);
     break;
-  case 3:
+  case 2:
     temp = MAX22530::MAX22530_read_register(FADC3);
     break;
-  case 4:
+  case 3:
     temp = MAX22530::MAX22530_read_register(FADC4);
     break;
   default:
@@ -98,19 +98,19 @@ void MAX22530::setComp(int channel, uint16_t up_value, uint16_t down_value, bool
 
   switch (channel)
   {
-  case 1:
+  case 0:
     MAX22530::MAX22530_write_register(COUTHI1, temp_up);
     MAX22530::MAX22530_write_register(COUTLO1, temp_down);
     break;
-  case 2:
+  case 1:
     MAX22530::MAX22530_write_register(COUTHI2, temp_up);
     MAX22530::MAX22530_write_register(COUTLO2, temp_down);
     break;
-  case 3:
+  case 2:
     MAX22530::MAX22530_write_register(COUTHI3, temp_up);
     MAX22530::MAX22530_write_register(COUTLO3, temp_down);
     break;
-  case 4:
+  case 3:
     MAX22530::MAX22530_write_register(COUTHI4, temp_up);
     MAX22530::MAX22530_write_register(COUTLO4, temp_down);
     break;
@@ -124,7 +124,7 @@ uint16_t MAX22530::readCompReg(int channel, bool highlow)
   uint16_t temp = 0;
   switch (channel)
   {
-  case 1:
+  case 0:
     if (highlow == 0)
     {
       temp = MAX22530::MAX22530_read_register(COUTLO1);
@@ -134,7 +134,7 @@ uint16_t MAX22530::readCompReg(int channel, bool highlow)
       temp = MAX22530::MAX22530_read_register(COUTHI1);
     }
     break;
-  case 2:
+  case 1:
     if (highlow == 0)
     {
       temp = MAX22530::MAX22530_read_register(COUTLO2);
@@ -144,7 +144,7 @@ uint16_t MAX22530::readCompReg(int channel, bool highlow)
       temp = MAX22530::MAX22530_read_register(COUTHI2);
     }
     break;
-  case 3:
+  case 2:
     if (highlow == 0)
     {
       temp = MAX22530::MAX22530_read_register(COUTLO3);
@@ -154,7 +154,7 @@ uint16_t MAX22530::readCompReg(int channel, bool highlow)
       temp = MAX22530::MAX22530_read_register(COUTHI3);
     }
     break;
-  case 4:
+  case 3:
     if (highlow == 0)
     {
       temp = MAX22530::MAX22530_read_register(COUTLO4);
@@ -214,7 +214,7 @@ void MAX22530::CLEARFilter(int channel)
   uint16_t register_value = 0;
   switch (channel)
   {
-  case 1:
+  case 0:
     register_value = MAX22530::MAX22530_read_register(CONTROL);
     register_value = register_value | 16;
     MAX22530::MAX22530_write_register(CONTROL, register_value);
@@ -223,7 +223,7 @@ void MAX22530::CLEARFilter(int channel)
     register_value = register_value & 65519;
     MAX22530::MAX22530_write_register(CONTROL, register_value);
     break;
-  case 2:
+  case 1:
     register_value = MAX22530::MAX22530_read_register(CONTROL);
     register_value = register_value | 32;
     MAX22530::MAX22530_write_register(CONTROL, register_value);
@@ -232,7 +232,7 @@ void MAX22530::CLEARFilter(int channel)
     register_value = register_value & 65503;
     MAX22530::MAX22530_write_register(CONTROL, register_value);
     break;
-  case 3:
+  case 2:
     register_value = MAX22530::MAX22530_read_register(CONTROL);
     register_value = register_value | 64;
     MAX22530::MAX22530_write_register(CONTROL, register_value);
@@ -241,7 +241,7 @@ void MAX22530::CLEARFilter(int channel)
     register_value = register_value & 65471;
     MAX22530::MAX22530_write_register(CONTROL, register_value);
     break;
-  case 4:
+  case 3:
     register_value = MAX22530::MAX22530_read_register(CONTROL);
     register_value = register_value | 128;
     MAX22530::MAX22530_write_register(CONTROL, register_value);
