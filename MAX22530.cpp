@@ -177,7 +177,7 @@ uint16_t MAX22530::readInterrupt()
 {
   return MAX22530::MAX22530_read_register(INTERRUPT_STATUS);
 }
-void MAX22530::setInteruptEnable(uint16_t data)
+void MAX22530::setInterruptEnable(uint16_t data)
 {
   if (data < 4096)
   {
