@@ -33,23 +33,23 @@
 class MAX22530
 {
 public:
-    explicit MAX22530(uint8_t cspin, SPIClass *theSPI = &SPI); /* Starts ADC with CS PIN,SPI class,Interupt pin */
-    bool begin(int frequency); /*Opens connection with specified frequency (max 10 MHz) */
-    int readADC(int channel); /* Reads ADC, channels 1-4 */
-    int readFiltered(int channel);/* Reads filtered value for more info see datashett, channels 1-4*/
-    float CNVTVoltage(int count); /* Convertes count to voltage*/
-    void setComp(int channel, uint16_t up_value, uint16_t down_value, bool source, bool mode);/* Sets the comparator for givin channel (1-4), with up and down value, source (0 -> unfiltered 1-> filtered), mode (0 -> digital status mode 1-> digital input mode)*/
-    uint16_t readCompReg(int channel, bool highlow); /* Reads the selected channel register (1-4) highlow selects if COUTHI (1) or COUTLO (0) is read */
-    uint16_t readCompStat(void); /* Reads the COUT STATUS register */
-    uint16_t readInterrupt(void); /* Reads the I´NTERUPT STAUS register !READING CLEARS ALL INTERUPT FLAGS! */
-    void setInterruptEnable(uint16_t data); /* Sets the INTERUPT ENABLE REGISTER after this operation interupts will be issued over the #INT pin! */
-    void SPI_CRC (bool enable); /* ENABLES/DISABELS CRC*/
-    void COMTThreshold(bool enable); /* ENABLE COMMON THRESHOLD only COUTH1 and COUTLO1 are used for all comparators*/
-    void CLEARFilter(int channel); /* Clears the specific filter (1-4) */
-    void VDDF(bool enable); /* ON/OFF of VDFF (1 VDFF off)*/
-    void SoftwareReset(void); /* SOFTWARE RESET*/
-    void HardwareReset(void); /* HARDWARE RESET*/
-    void clearPOR(void); /* CLEARS THE POR BIT in 0x00*/
+    explicit MAX22530(uint8_t cspin, SPIClass *theSPI = &SPI);                                 /* Starts ADC with CS PIN,SPI class,Interupt pin */
+    bool begin(int frequency);                                                                 /*Opens connection with specified frequency (max 10 MHz) */
+    int readADC(int channel);                                                                  /* Reads ADC, channels 1-4 */
+    int readFiltered(int channel);                                                             /* Reads filtered value for more info see datashett, channels 1-4*/
+    float CNVTVoltage(int count);                                                              /* Convertes count to voltage*/
+    void setComp(int channel, uint16_t up_value, uint16_t down_value, bool source, bool mode); /* Sets the comparator for givin channel (1-4), with up and down value, source (0 -> unfiltered 1-> filtered), mode (0 -> digital status mode 1-> digital input mode)*/
+    uint16_t readCompReg(int channel, bool highlow);                                           /* Reads the selected channel register (1-4) highlow selects if COUTHI (1) or COUTLO (0) is read */
+    uint16_t readCompStat(void);                                                               /* Reads the COUT STATUS register */
+    uint16_t readInterrupt(void);                                                              /* Reads the I´NTERUPT STAUS register !READING CLEARS ALL INTERUPT FLAGS! */
+    void setInterruptEnable(uint16_t data);                                                    /* Sets the INTERUPT ENABLE REGISTER after this operation interupts will be issued over the #INT pin! */
+    void SPI_CRC(bool enable);                                                                 /* ENABLES/DISABELS CRC*/
+    void COMTThreshold(bool enable);                                                           /* ENABLE COMMON THRESHOLD only COUTH1 and COUTLO1 are used for all comparators*/
+    void CLEARFilter(int channel);                                                             /* Clears the specific filter (1-4) */
+    void VDDF(bool enable);                                                                    /* ON/OFF of VDFF (1 VDFF off)*/
+    void SoftwareReset(void);                                                                  /* SOFTWARE RESET*/
+    void HardwareReset(void);                                                                  /* HARDWARE RESET*/
+    void clearPOR(void);                                                                       /* CLEARS THE POR BIT in 0x00*/
 
 private:
     long MAX22530_read_register(uint8_t regAddress);                             /* Reads the value of the selected register. */
