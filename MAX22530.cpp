@@ -1,4 +1,5 @@
 #include <MAX22530.h>
+#include <SPI.h>
 
 MAX22530::MAX22530(uint8_t cspin, SPIClass *theSPI)
 {
@@ -280,12 +281,12 @@ void MAX22530::clearPOR()
 {
   uint16_t register_value = 0;
   register_value = MAX22530::MAX22530_read_register(CONTROL);
-  register_value = register_value | 4; 
+  register_value = register_value | 4;
   MAX22530::MAX22530_write_register(CONTROL, register_value);
   delay(5);
   register_value = MAX22530::MAX22530_read_register(CONTROL);
-  register_value = register_value & 65531; 
-  MAX22530::MAX22530_write_register(CONTROL, register_value); 
+  register_value = register_value & 65531;
+  MAX22530::MAX22530_write_register(CONTROL, register_value);
 }
 
 long MAX22530::MAX22530_read_register(uint8_t regAddress)
@@ -295,19 +296,25 @@ long MAX22530::MAX22530_read_register(uint8_t regAddress)
   uint32_t frame = (uint32_t)(regAddress << 2);
   if (!crc_enable) // Read/ Write bit set to 0 and burst bit set to 0.(b'18 is 0 and b'17 is 0)
   {
-    _SPI->beginTransaction(_cs, SPISettings(_frequency, MSBFIRST, SPI_MODE0));
-    _SPI->transfer(_cs, frame, SPI_CONTINUE);
-    result = _SPI->transfer16(_cs, 0);
+    _SPI->beginTransaction(SPISettings(_frequency, MSBFIRST, SPI_MODE0));
+    // delayMicroseconds(1);
+    digitalWrite(_cs, LOW);
+    _SPI->transfer(frame);
+    result = _SPI->transfer16(0);
+    digitalWrite(_cs, HIGH);
     _SPI->endTransaction();
     return result;
   }
   else
   {
     uint8_t crc = crc_compute_2(frame << 16);
-    _SPI->beginTransaction(_cs, SPISettings(_frequency, MSBFIRST, SPI_MODE0));
-    _SPI->transfer(_cs, frame, SPI_CONTINUE);
-    result = _SPI->transfer16(_cs, 0, SPI_CONTINUE);
-    crc_read = _SPI->transfer(_cs, crc);
+    _SPI->beginTransaction(SPISettings(_frequency, MSBFIRST, SPI_MODE0));
+    // delayMicroseconds(1);
+    digitalWrite(_cs, LOW);
+    _SPI->transfer(frame);
+    result = _SPI->transfer16(0);
+    crc_read = _SPI->transfer(crc);
+    digitalWrite(_cs, HIGH);
     _SPI->endTransaction();
     crc = crc_compute_2((frame << 16) + (result));
     if (crc == crc_read)
@@ -332,17 +339,20 @@ void MAX22530::MAX22530_write_register(uint8_t regAddress, uint16_t regValue)
     crc_code = crc_compute_2((data_frame1 << 16) + (regValue << 0));
   }
 
-  _SPI->beginTransaction(_cs, SPISettings(_frequency, MSBFIRST, SPI_MODE0));
-  _SPI->transfer(_cs, data_frame1, SPI_CONTINUE);
+  _SPI->beginTransaction(SPISettings(_frequency, MSBFIRST, SPI_MODE0));
+  digitalWrite(_cs, LOW);
+  // delayMicroseconds(1);
+  _SPI->transfer(data_frame1);
   if (crc_enable)
   {
-    _SPI->transfer16(_cs, regValue, SPI_CONTINUE);
-    _SPI->transfer(_cs, crc_code);
+    _SPI->transfer16(regValue);
+    _SPI->transfer(crc_code);
   }
   else
   {
-    _SPI->transfer16(_cs, regValue);
+    _SPI->transfer16(regValue);
   }
+  digitalWrite(_cs, HIGH);
   _SPI->endTransaction();
 }
 void MAX22530::MAX22530_Register_bit_toggle(uint8_t regAddress, uint8_t bit_position)
@@ -402,7 +412,6 @@ uint8_t MAX22530::crc_compute_2(uint32_t frame)
   uint8_t frame_mid = (uint8_t)((frame & 0x0000FF00) >> 8);
   uint8_t frame_low = (uint8_t)(frame & 0x000000FF);
   uint8_t message[] = {frame_high, frame_mid, frame_low, 0x00};
-  int i, j;
   message[3] = getCRC(message, 3);
   return (message[3]);
 }
